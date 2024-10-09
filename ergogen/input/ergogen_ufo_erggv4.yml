@@ -1,0 +1,185 @@
+units:
+  kx: cx
+  ky: cy
+  px: kx + 4
+  py: ky + 4
+points:
+  rotate: 0
+  key: 
+    bind: 5
+    padding: ky
+    spread: kx
+    width: 17.5
+    height: 16.5
+    tags:
+      1u: true
+    footprints:
+      choc_hotswap:
+        type: choc
+        nets:
+          to: "{{key_net}}"
+          from: GND
+        params:
+          reverse: false
+          hotswap: true
+          model: false
+          keycaps: false
+      choc:
+        type: choc
+        anchor:
+          rotate: 180
+        nets:
+          to: "{{key_net}}"
+          from: GND
+        params:
+          keycaps: true
+          reverse: false
+  zones:
+    matrix:
+      anchor:
+        shift: [150, -170]
+      columns:
+        outer:
+          rows.top.skip: true
+        pinky:
+        ring:
+          key.stagger: 7
+        middle:
+          key.stagger: 4
+        index:
+          key.stagger: -4
+        index2:
+          key.stagger: -4
+        inner:
+          rows.top.skip: true
+      rows:
+        bottom:
+        home:
+        home2:
+        top:
+    thumbfan:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-27, -18]
+      columns:
+        near:
+        home:
+          key:
+            spread: 18
+            splay: -20
+            origin: [-10, -10]
+        far:
+          key:
+            spread: 18
+            splay: -20
+            origin: [-10, -10]
+      rows:
+        thumb:
+
+outlines:
+  raw: 
+    - what: rectangle
+      bound: true
+      where: true
+      size: [px , py]   
+  keys:
+    - what: rectangle
+      where: true
+      bound: false
+      size: [kx-0.5,ky-0.5]
+  board:
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        - ref: matrix_outer_home2
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_pinky_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index2_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_home2
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_home2
+          shift: [1.5px, 0.5py]
+        - ref: matrix_inner_home2
+          shift: [1.5px, -2.4py]
+        - ref: matrix_inner_home2
+          shift: [0.5px, -2.4py]
+        - ref: matrix_inner_bottom
+          shift: [0.5px, -0.9py]    # inner troubling point
+        - ref: thumbfan_far_thumb
+          shift: [0.5px, 0.5py]
+        - ref: thumbfan_far_thumb
+          shift: [0.5px, -0.5py]
+        - ref: thumbfan_far_thumb
+          shift: [-0.5px, -0.5py]
+        - ref: thumbfan_home_thumb
+          shift: [-0.5px, -0.5py]
+        - ref: thumbfan_near_thumb
+          shift: [-0.5px, -0.5py]
+        - ref: thumbfan_near_thumb
+          shift: [-0.5px, 0.2py]    # bottom troubling point
+        - ref: matrix_outer_bottom
+          shift: [-0.5px, -0.5py]
+  combo:
+    - name: board
+    - operation: subtract
+      name: keys
+pcbs:
+  tutorial:
+    outlines:
+      main:
+        outline: board
+    footprints:
+      choc_hotswap:
+        what: choc
+        where: true
+        params:
+          keycaps: true
+          reverse: true
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      promicro:
+        type: promicro_pretty
+        where:
+          ref: matrix_inner_home
+          shift: [22, 6]
+          rotate: -90
+      trrs:
+        what: trrs
+        where:
+          ref: matrix_inner_bottom
+          shift: [28, -1]
+          rotate: -90
+        params:
+          reverse: true
+          A: wtf
+          B: wtf
+          C: wtf
+          D: wtf
+      reset:
+        what: button
+        where:
+          ref: matrix_inner_bottom
+          shift: [22, -10]
+        params:
+          from: "GND"
+          to: "RST"

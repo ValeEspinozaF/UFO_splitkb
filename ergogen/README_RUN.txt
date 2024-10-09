@@ -1,0 +1,1 @@
+node src/cli.js input/config_ergovale.yaml -o output/ergovale

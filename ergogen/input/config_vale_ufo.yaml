@@ -1,0 +1,222 @@
+units:
+  kx: cx
+  ky: cy
+  px: kx + 4
+  py: ky + 4
+points:
+  rotate: 0
+  key: 
+    bind: 5
+    padding: ky
+    spread: kx
+    width: 17.5
+    height: 16.5
+    tags:
+      1u: true
+    footprints:
+      choc_hotswap:
+        type: choc
+        nets:
+          from: =column_net
+          to: =colrow
+        params:
+          reverse: true
+          hotswap: true
+          keycaps: false
+      diode:
+        type: diode
+        nets:
+          from: =colrow
+          to: =row_net
+        anchor:
+          shift: [0, -5]
+  zones:
+    matrix:
+      anchor:
+        shift: [150, -170]
+      columns:
+        outer:
+          rows.bottom.column_net: P1
+          rows.bottom.row_net: P10
+          rows.home.column_net: P1
+          rows.home.row_net: P9
+          rows.home2.column_net: P1
+          rows.home2.row_net: P8
+          rows.top.skip: true
+        pinky:
+          rows.bottom.column_net: P0
+          rows.bottom.row_net: P10
+          rows.home.column_net: P0
+          rows.home.row_net: P9
+          rows.home2.column_net: P1
+          rows.home2.row_net: P7
+          rows.top.column_net: P1
+          rows.top.row_net: P6
+        ring:
+          stagger: 7
+          rows.bottom.column_net: P2
+          rows.bottom.row_net: P10
+          rows.home.column_net: P0
+          rows.home.row_net: P8
+          rows.home2.column_net: P0
+          rows.home2.row_net: P7
+          rows.top.column_net: P0
+          rows.top.row_net: P6
+        middle:
+          stagger: 4
+          rows.bottom.column_net: P2
+          rows.bottom.row_net: P9
+          rows.home.column_net: P2
+          rows.home.row_net: P8
+          rows.home2.column_net: P2
+          rows.home2.row_net: P7
+          rows.top.column_net: P2
+          rows.top.row_net: P6
+        index:
+          stagger: -4
+          rows.bottom.column_net: P3
+          rows.bottom.row_net: P9
+          rows.home.column_net: P3
+          rows.home.row_net: P8
+          rows.home2.column_net: P3
+          rows.home2.row_net: P7
+          rows.top.column_net: P3
+          rows.top.row_net: P6
+        index2:
+          stagger: -4
+          rows.bottom.column_net: P4
+          rows.bottom.row_net: P9
+          rows.home.column_net: P4
+          rows.home.row_net: P8
+          rows.home2.column_net: P4
+          rows.home2.row_net: P7
+          rows.top.column_net: P4
+          rows.top.row_net: P6
+        inner:
+          rows.bottom.column_net: P5
+          rows.bottom.row_net: P9
+          rows.home.column_net: P5
+          rows.home.row_net: P8
+          rows.home2.column_net: P5
+          rows.home2.row_net: P7
+          rows.top.skip: true
+      rows:
+        bottom:
+        home:
+        home2:
+        top:
+    thumbfan:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-27, -18]
+      columns:
+        near:
+          rows.thumb.column_net: P3
+        home:
+          spread: 18
+          rotate: -20
+          origin: [-10, -10]
+          rows.thumb.column_net: P4
+        far:
+          spread: 18
+          rotate: -20
+          origin: [-10, -10]
+          rows.thumb.column_net: P5
+      rows:
+        thumb:
+          row_net: P10
+
+outlines:
+  exports:
+    keycaps:
+      - type: keys
+        side: left
+        size: [1cx - 0.5, 1cy - 0.5] # Choc keycaps are 17.5 x 16.5
+        bound: false    
+    board:
+      - type: polygon
+        operation: stack
+        points:
+          - ref: matrix_outer_home2
+            shift: [-0.5px, 0.5py]
+          - ref: matrix_pinky_top
+            shift: [-0.5px, 0.5py]
+          - ref: matrix_ring_top
+            shift: [-0.5px, 0.5py]
+          - ref: matrix_middle_top
+            shift: [-0.5px, 0.5py]
+          - ref: matrix_middle_top
+            shift: [0.5px, 0.5py]
+          - ref: matrix_index_top
+            shift: [0.5px, 0.5py]
+          - ref: matrix_index2_top
+            shift: [0.5px, 0.5py]
+          - ref: matrix_inner_home2
+            shift: [0.5px, 0.5py]
+          - ref: matrix_inner_home2
+            shift: [1.5px, 0.5py]
+          - ref: matrix_inner_home2
+            shift: [1.5px, -2.4py]
+          - ref: matrix_inner_home2
+            shift: [0.5px, -2.4py]
+          - ref: matrix_inner_bottom
+            shift: [0.5px, -0.9py]    # inner troubling point
+          - ref: thumbfan_far_thumb
+            shift: [0.5px, 0.5py]
+          - ref: thumbfan_far_thumb
+            shift: [0.5px, -0.5py]
+          - ref: thumbfan_far_thumb
+            shift: [-0.5px, -0.5py]
+          - ref: thumbfan_home_thumb
+            shift: [-0.5px, -0.5py]
+          - ref: thumbfan_near_thumb
+            shift: [-0.5px, -0.5py]
+          - ref: thumbfan_near_thumb
+            shift: [-0.5px, 0.2py]    # bottom troubling point
+          - ref: matrix_outer_bottom
+            shift: [-0.5px, -0.5py]
+pcbs:
+  ergovale:
+    outlines:
+      board:
+        outline: board
+      keycaps:
+        outline: keycaps
+        layer: Eco1.User
+    footprints:
+      promicro:
+        type: promicro_pretty
+        anchor:
+          ref: matrix_inner_home
+          shift: [22, 6]
+          rotate: -90
+      trrs:
+        type: trrs
+        anchor:
+          ref: matrix_inner_bottom
+          shift: [28, -1]
+          rotate: -90
+        params:
+          reverse: true
+        nets:
+          A: VCC
+          B: P16
+          C: GND
+          D: GND
+      reset:
+        type: b3u1000p
+        nets:
+          r1: RST  
+          r2: GND
+        anchor:
+          ref: matrix_inner_bottom
+          shift: [22, -10]
+        params:
+          reverse: true 
+      mhole:
+        type: mounthole
+        anchor:
+          ref: matrix_pinky_bottom
+          shift: [cx, -0.5ky]
+        params:
+          diameter: 2.2
